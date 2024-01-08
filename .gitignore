@@ -1,0 +1,9 @@
+.venv*
+.idea
+__pycache__
+__pycache__/
+.aoc_token
+token
+tokens.json
+token2id.json
+*.log

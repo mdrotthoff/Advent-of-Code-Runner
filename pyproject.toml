@@ -7,9 +7,113 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.10,<3.12"
+pydantic = "^2.5.3"
 
+
+[tool.poetry.group.dev.dependencies]
+pysnooper = "^1.2.0"
+bump-my-version = "^0.16.2"
+pydocstringformatter = "^0.7.3"
+black = "^23.12.1"
+isort = "^5.13.2"
+pipdeptree = "^2.13.2"
+ruff = "^0.1.14"
+bandit = "^1.7.6"
+pylint = "^3.0.3"
+flake8 = "^7.0.0"
+mypy = "^1.8.0"
+pylint-pydantic = "^0.3.2"
+pylama = "^8.4.1"
+radon = "^6.0.1"
+flake8-bugbear = "^24.1.17"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.4"
+pytest-cov = "^4.1.0"
+pytest-html = "^4.1.1"
+pytest-explicit = "^1.0.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+######
+# Black configuration
+######
+[tool.black]
+line-length=95
+
+######
+# PyTest options
+######
+[tool.pytest.ini_options]
+addopts= [
+    "--cov",                                      # Generate a coverage report on successful testing
+    "--cov-report=html",  # Generate a coverage report on successful testing
+#    "--cov-report=html:Advent-of-Code-Coverage",  # Generate a coverage report on successful testing
+#    "--emoji",
+    "--durations-min=1",                          # List tests that take longer than the secified number of seconds
+    "--maxfail=3",                                # Stop tests after x failres
+    "--ff",                                       # Run Failed tests first
+    "--no-cov-on-fail",                           # No coverage report is a test fails
+    "--showlocals",                               # Show local variables on exception
+    "--tb=auto",                                  # Exception tracing style
+#    "-ra",                                        # Test status to show in the summary
+#    "--verbose",                                  # Verbose output
+    "--basetemp=.pytest_tmp",                      # Set the base directory of used by Pytest for temp files
+#    "-s",
+]
+
+python_files = [
+    "test_*.py",
+    "*_test.py",
+]
+
+pythonpath = [
+    ".",
+    "src"
+]
+
+testpaths = [
+    "tests",
+]
+
+markers = [
+    "slow",            # Slow running tests
+    "unit",            # Unit level testing
+    "integration",     # Integration testing
+    "smoke",           # Smoke testing
+    "diags",           # Diagnostic tests
+    "debug",           # Test to debug
+    "account",         # Account application tests
+    "core",            # Core application tests
+    "user",            # User application tests
+    "web",             # Browwer based tests
+    "dev",             # Tests under development
+    "external",        # Test that access the Advent of Code servers
+]
+
+explicit-only = [
+    "debug",           # Test to debug
+    "external",        # Tests that access the Advent of Code servers
+]
+
+######
+# Coverage options
+######
+[tool.coverage.paths]
+source = [
+    "aoc_runner",
+    "src",
+]
+
+[tool.coverage.run]
+source = [
+    "aoc_runner",
+#    "src",
+]
+
+[tool.coverage.report]
+show_missing = true

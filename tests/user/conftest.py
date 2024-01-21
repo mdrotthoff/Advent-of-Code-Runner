@@ -252,7 +252,7 @@ def make_load_user_settings(request):
     def make(url: str, token: str, redirect: bool):
         """Load the cached user setting response from the Advent of Code servers"""
 
-        file_path = request.config.rootdir / "tests" / "aoc_runner" / "user" / "data"
+        file_path = request.config.rootdir / "tests" / "data" / "user"
         file_name = file_path / f"settings_{token}.pickle"
         print(f"Getting mocked user settings for token {token}")
 

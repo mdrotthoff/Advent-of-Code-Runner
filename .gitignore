@@ -7,3 +7,7 @@ token
 tokens.json
 token2id.json
 *.log
+.config
+venv*
+.coverage
+.pytest_tmp

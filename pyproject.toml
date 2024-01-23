@@ -64,7 +64,7 @@ addopts= [
     "--tb=auto",                                  # Exception tracing style
 #    "-ra",                                        # Test status to show in the summary
 #    "--verbose",                                  # Verbose output
-    "--basetemp=.pytest_tmp",                      # Set the base directory of used by Pytest for temp files
+    "--basetemp=.pytest_tmp",                     # Set the base directory of used by Pytest for temp files
 #    "-s",
 ]
 
@@ -91,7 +91,8 @@ markers = [
     "debug",           # Test to debug
     "account",         # Account application tests
     "core",            # Core application tests
-    "user",            # User application tests
+    "config",          # Config module application tests
+    "user",            # User module application tests
     "web",             # Browwer based tests
     "dev",             # Tests under development
     "external",        # Test that access the Advent of Code servers

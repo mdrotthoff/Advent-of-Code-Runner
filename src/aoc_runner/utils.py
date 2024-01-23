@@ -43,23 +43,24 @@ class Color:
     END = "\033[0m"
 
     @classmethod
+    def color_dict(cls) -> dict[str, str]:
+        """Return the defined color names as a list"""
+        return {
+            # key for key in cls.__dict__.keys()
+            key: value
+            for key, value in cls.__dict__.items()
+            if not key.startswith("__") and key[:2] == key[:2].upper()
+        }
+
+    @classmethod
     def color_names(cls) -> list[str]:
         """Return the defined color names as a list"""
-        return [
-            # key for key in cls.__dict__.keys()
-            key
-            for key in cls.__dict__
-            if not key.startswith("__") and key[:2] == key[:2].upper()
-        ]
+        return [key for key, _ in cls.color_dict().items()]
 
     @classmethod
     def color_values(cls) -> list[str]:
         """Return the defined color values as a list"""
-        return [
-            value
-            for key, value in cls.__dict__.items()
-            if isinstance(value, str) and key in cls.color_names()
-        ]
+        return [value for _, value in cls.color_dict().items()]
 
     @classmethod
     def get_color_code(cls, color_name) -> str:
@@ -67,31 +68,38 @@ class Color:
         color_code = [
             value for key, value in cls.__dict__.items() if key == color_name.upper()
         ]
-        return color_code[0]
+        return color_code[0] if color_code else None
 
     @classmethod
-    def validate_color(cls, color_code) -> bool:
+    def validate_color_code(cls, color_code) -> bool:
         """Validate that the color code provided is defined"""
         return color_code in cls.color_values()
+
+    @classmethod
+    def validate_color_name(cls, color_name) -> bool:
+        """Validate that the color code provided is defined"""
+        return color_name in cls.color_names()
 
 
 color = Color()
 
 
-def colored(txt: str, color: str | None) -> str:
+def colored(txt: str, color_name: str | None) -> str:
     """Add color formatting to the provided text"""
-    if color is None:
+    if color_name is None:
         return txt
 
-    if color.upper() in Color().color_names():
-        color_name = color
-        color = Color().get_color_code(color)
+    if color_name.upper() in Color().color_names():
+        # color_name = color_name.upper()
+        color_code = Color().get_color_code(color_name)
         log.debug("Color %s was translated", color_name)
+    else:
+        color_code = None
 
-    if not Color().validate_color(color):
-        log.debug("Color %s not defined -- continuing", color)
+    if not Color().validate_color_code(color_name):
+        log.debug("Color %s not defined -- continuing", color_name)
 
-    return f"{color}{txt}{Color().END}"
+    return f"{color_code}{txt}{Color().END}"
 
 
 @cache

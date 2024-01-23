@@ -3,12 +3,29 @@
 # System libraries
 from functools import cache
 import logging
+from pathlib import Path
 
 # Third-party libraries
 from bs4 import BeautifulSoup
 
+# Advent of Code Runner libraries
+from .exceptions import DirectoryIsFile
 
 log = logging.getLogger(__name__)
+
+
+def _ensure_path_exists(path_name: str, path: Path, create: bool = True) -> None:
+    """Ensure that the specified directory path exists and is
+    a directory
+    """
+    log.debug("Setting %s to %s", path_name, path)
+    print(f"Setting {path_name} to {str(path)}")
+
+    if path.exists():
+        if path.is_file():
+            raise DirectoryIsFile(f"Expected {str(path)} to be a directory not a file")
+    elif create:
+        path.mkdir(parents=True, exist_ok=True)
 
 
 class Color:
@@ -84,10 +101,10 @@ def get_soup(html):
     return soup
 
 
-if __name__ == "__main__":
-    SAMPLE_TEXT = "Sample text"
-    print(f"Color names: {Color().color_names()}")
-    print(f"Color values: {Color().color_values()}")
-    print(colored(txt=SAMPLE_TEXT, color=color.RED))
-    print(colored(txt=SAMPLE_TEXT, color="blue"))
-    print(colored(txt=SAMPLE_TEXT, color="hazy"))
+# if __name__ == "__main__":
+#     SAMPLE_TEXT = "Sample text"
+#     print(f"Color names: {Color().color_names()}")
+#     print(f"Color values: {Color().color_values()}")
+#     print(colored(txt=SAMPLE_TEXT, color=color.RED))
+#     print(colored(txt=SAMPLE_TEXT, color="blue"))
+#     print(colored(txt=SAMPLE_TEXT, color="hazy"))

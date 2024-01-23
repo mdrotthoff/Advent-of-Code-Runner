@@ -6,16 +6,9 @@ from os import environ
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-# TODO: Remove conditional import at development is complete
 # Advent of Code Runner libraries
 from .exceptions import DirectoryIsFile
-
-# if __name__ == "__main__":
-#     from exceptions import DirectoryIsFile
-# else:
-#     from .exceptions import DirectoryIsFile
-
-__version__ = "0.0.1"
+from .utils import _ensure_path_exists
 
 log = logging.getLogger(__name__)
 
@@ -26,20 +19,6 @@ RUNNER_CACHE: str = "AOC_RUNNER_CACHE_DIR"
 RUNNER_DIR: str = "AOC_RUNNER_DIR"
 RUNNER_HOME: str = "AOC_RUNNER_PROJECT_HOME"
 RUNNER_USERS: str = "AOC_RUNNER_USERS_DIR"
-
-
-def _ensure_path_exists(path_name: str, path: Path, create: bool = True) -> None:
-    """Ensure that the specified directory path exists and is
-    a directory
-    """
-    log.debug("Setting %s to %s", path_name, path)
-    print(f"Setting {path_name} to {str(path)}")
-
-    if path.exists():
-        if path.is_file():
-            raise DirectoryIsFile(f"Expected {str(path)} to be a directory not a file")
-    elif create:
-        path.mkdir(parents=True, exist_ok=True)
 
 
 # Set the default location for the Advent of Code Runner to store

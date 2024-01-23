@@ -7,10 +7,11 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 # Advent of Code Runner libraries
-from .exceptions import DirectoryIsFile
 from .utils import _ensure_path_exists
 
 log = logging.getLogger(__name__)
+
+__version__ = '0.0.1'
 
 
 """Defined the various environment variables used"""
@@ -31,6 +32,7 @@ if RUNNER_DIR not in environ:
 else:
     AOC_RUNNER_DIR = Path(environ.get(RUNNER_DIR))
 _ensure_path_exists(path_name=RUNNER_DIR, path=AOC_RUNNER_DIR, create=True)
+
 
 # Set the default home of the Advent of Code project
 if RUNNER_HOME not in environ:

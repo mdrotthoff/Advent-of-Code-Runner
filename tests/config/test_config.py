@@ -11,6 +11,11 @@ from pprint import pprint
 # Import Pytest libraries
 import pytest
 
+# Advent of Code Runner libraries
+from aoc_runner.config import AOC_DOMAIN
+from aoc_runner.httpclient import http_client
+from aoc_runner.utils import get_soup
+
 
 @pytest.mark.parametrize(
     "environ_vars",
@@ -138,3 +143,16 @@ def test_runner_home_only(ensure_path_exists, monkeypatch, environ_vars):
 
     # Reload the module into it's original state
     reload(sys.modules["aoc_runner.config"])
+
+
+@pytest.mark.config
+@pytest.mark.external
+def test_aoc_domain():
+    """Test access the Advent of Code servers based on the config.AOC_DOMAIN"""
+
+    response = http_client.get(url=AOC_DOMAIN, token=None, redirect=False)
+    soup = get_soup(response.data)
+
+    assert response.status == 200
+    assert soup.title.text.startswith('Advent of Code')
+

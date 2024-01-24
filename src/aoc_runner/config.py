@@ -11,7 +11,7 @@ from .utils import _ensure_path_exists
 
 log = logging.getLogger(__name__)
 
-__version__ = '0.0.1'
+__version__ = "0.0.1"
 
 
 """Defined the various environment variables used"""

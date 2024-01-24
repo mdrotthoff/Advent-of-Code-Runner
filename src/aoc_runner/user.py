@@ -45,6 +45,7 @@ LOGIN_SOURCES = ["github", "google", "twitter", "reddit"]
 # @dataclass
 class UserInfo(BaseModel):
     """Define the data captured about a specific Advent of Code user"""
+
     # TODO:  Add a property of user_id
     user_name: str
     aoc_id: int = Field(gt=0)
@@ -78,7 +79,9 @@ class User:
 
         if not isinstance(user_info, UserInfo):
             log.error("User_info parameter must be of UserInfo type not %s", type(user_info))
-            raise AocValueError(f"User_info parameter must be of UserInfo type not {type(user_info)}")
+            raise AocValueError(
+                f"User_info parameter must be of UserInfo type not {type(user_info)}"
+            )
 
         self._user_info: UserInfo = user_info
         log.debug("Class User successfully initialized")
@@ -88,7 +91,8 @@ class User:
         """Find the owner of the specified token. Raises DeadTokenError if the token is
         expired or invalid. Returns a User object
         """
-        """Set the user's token"""
+
+        # Set the user's token
         if not isinstance(token, str):
             log.error("token parameter must be of str type not %s", type(token))
             raise AocValueError(f"token parameter must be of str type not {type(token)}")
@@ -142,40 +146,49 @@ class User:
     @property
     def aoc_id(self) -> int:
         """Return the user's Advent of Code ID"""
+
         return self._user_info.aoc_id
 
     @property
     def last_updated(self) -> datetime:
         """Return the user's login source"""
+
         return self._user_info.last_updated
 
     @last_updated.setter
     def last_updated(self, last_updated: datetime) -> None:
         """Update the last updated for the user"""
+
         if not isinstance(last_updated, datetime):
             log.error("token parameter must be of str type not %s", type(last_updated))
-            raise AocValueError(f"token parameter must be of str type not {type(last_updated)}")
+            raise AocValueError(
+                f"token parameter must be of str type not {type(last_updated)}"
+            )
 
         self._user_info.last_updated = last_updated
 
     @property
     def login_source(self) -> str:
         """Return the user's login source"""
+
         return self._user_info.login_source
 
     @property
     def memo(self) -> Path:
         """Return the user's indiviaual cache directory"""
+
         return AOC_RUNNER_USERS_DIR / self.user_id
 
     @property
     def token(self) -> str:
         """Return the user's token"""
+
         return self._user_info.token
 
     @token.setter
     def token(self, token: str) -> None:
         """Set the user's token"""
+
         if not isinstance(token, str):
             log.error("token parameter must be of str type not %s", type(token))
             raise AocValueError(f"token parameter must be of str type not {type(token)}")
@@ -186,16 +199,19 @@ class User:
     @property
     def user_id(self) -> str:
         """Return the user ID associated with the user"""
+
         return f"{self._user_info.login_source}.{self._user_info.aoc_id}"
 
     @property
     def user_name(self) -> str:
         """Return the username associated with the user"""
+
         return self._user_info.user_name
 
     @property
     def user_info(self) -> UserInfo:
         """Return the user information associated with the user"""
+
         user_info = self._user_info.model_copy()
         return user_info
 
@@ -205,6 +221,7 @@ class UserList:
 
     def __init__(self) -> None:
         """Initialize the class from the source file"""
+
         self._users: dict[str, User] = {}
         self._default_user: str | None = None
         self._last_modified: float = 0
@@ -225,6 +242,7 @@ class UserList:
         """Discover user's token from the environment or file. This default user is
         used whenever a token or user id was otherwise unspecified.
         """
+
         # Import your session id from environment variable AOC_RUNNER_SESSION
         token = getenv("AOC_RUNNER_SESSION")
         if token:
@@ -259,6 +277,7 @@ class UserList:
 
     def _get_token_owner(self, token: str) -> str | None:
         """Get the user ID associated with the supplied token"""
+
         for user_id, user_info in self._users.items():
             if user_info.token == token:
                 log.debug("Found token %s owned by %s", token, user_id)
@@ -269,6 +288,7 @@ class UserList:
 
     def _load(self) -> None:
         """Load the current known users from the source file"""
+
         if self.tokens_file.exists():
             load_state = json.loads(self.tokens_file.read_text(encoding="utf-8"))
             self._last_modified = self.tokens_file.stat().st_mtime
@@ -285,6 +305,7 @@ class UserList:
 
     def _save(self) -> None:
         """Save the current state of the User List to the tokens.json file"""
+
         save_state = {
             "default_user": self._default_user,
             "users": [user.user_info.model_dump() for user in self._users.values()],
@@ -303,6 +324,7 @@ class UserList:
 
     def add_token(self, token: str, force: bool = False) -> None:
         """Add a token to the list of managed users"""
+
         user = User.from_token(token=token)
         user_id = f"{user.login_source}.{user.aoc_id}"
         if user_id in self._users:
@@ -340,6 +362,7 @@ class UserList:
 
     def add_user(self, user_info: UserInfo, force: bool = False) -> None:
         """Add a user to the list of managed users"""
+
         if user_info.login_source.lower() not in LOGIN_SOURCES:
             log.error("Unknown login source %s", user_info.login_source)
             raise UnknownLoginSource(f"Unknown login source of {user_info.login_source}")
@@ -358,14 +381,18 @@ class UserList:
 
     def get_users(self) -> dict[str, User]:
         """Return a dictionary of the users managed"""
+
         return deepcopy(self._users)
 
     def remove_user(self, user_id: str) -> None:
         """Remove a user to the list of managed users"""
+
         if user_id not in self._users:
-            log.debug("User %s not removed from %s -- user did not exist",
-                      user_id, self.tokens_file
-                      )
+            log.debug(
+                "User %s not removed from %s -- user did not exist",
+                user_id,
+                self.tokens_file,
+            )
             return
 
         del self._users[user_id]
@@ -375,7 +402,9 @@ class UserList:
         if self._default_user == user_id:
             if self._users:
                 self._default_user = list(self._users.keys())[0]
-                log.debug("Changed default user to first available user %s", self._default_user)
+                log.debug(
+                    "Changed default user to first available user %s", self._default_user
+                )
             else:
                 self._default_user = None
 
@@ -383,6 +412,7 @@ class UserList:
 
     def set_default_token(self, token: str) -> None:
         """Set the default user to the User ID with the specified token"""
+
         user_id = self._get_token_owner(token=token)
         if user_id is None:
             log.error("No user found with token %s ", token)
@@ -397,6 +427,7 @@ class UserList:
 
     def set_default_user(self, user_id: str) -> None:
         """Set the default user to the specified User ID"""
+
         if user_id not in self._users:
             log.error("No user found with id %s ", user_id)
             raise NoSuchUser(f"No user found with id {user_id}")
@@ -410,6 +441,7 @@ class UserList:
 
     def update_token(self, user_id: str, token: str) -> None:
         """Update the token for the specified User ID"""
+
         if user_id not in self._users:
             log.error("No user found with id %s ", user_id)
             raise NoSuchUser(f"No user found with id {user_id}")
@@ -425,14 +457,17 @@ class UserList:
     @property
     def default_token_file(self) -> Path:
         """Return the path of the default token file"""
+
         return AOC_RUNNER_AUTH_DIR / "token"
 
     @property
     def default_user(self) -> str:
         """Return the current default user"""
+
         return self._default_user
 
     @property
     def tokens_file(self) -> Path:
         """Return the path of the tokens file"""
+
         return AOC_RUNNER_AUTH_DIR / "tokens.json"

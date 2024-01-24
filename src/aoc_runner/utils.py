@@ -87,17 +87,16 @@ color = Color()
 def colored(txt: str, color_name: str | None) -> str:
     """Add color formatting to the provided text"""
     if color_name is None:
+        print("Color name was None")
         return txt
 
-    if color_name.upper() in Color().color_names():
-        # color_name = color_name.upper()
-        color_code = Color().get_color_code(color_name)
-        log.debug("Color %s was translated", color_name)
-    else:
-        color_code = None
-
-    if not Color().validate_color_code(color_name):
+    if color_name.upper() not in Color().color_names():
+        print("Color %s not defined -- continuing", color_name)
         log.debug("Color %s not defined -- continuing", color_name)
+        return txt
+
+    color_code = Color().get_color_code(color_name=color_name)
+    log.debug("Color %s was translated", color_name)
 
     return f"{color_code}{txt}{Color().END}"
 

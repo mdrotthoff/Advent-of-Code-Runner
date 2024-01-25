@@ -14,7 +14,11 @@ from .exceptions import DirectoryIsFile
 log = logging.getLogger(__name__)
 
 
-def _ensure_path_exists(path_name: str, path: Path, create: bool = True) -> None:
+def _ensure_path_exists(
+    path_name: str,
+    path: Path,
+    create: bool = True,
+) -> None:
     """Ensure that the specified directory path exists and is
     a directory
     """
@@ -43,7 +47,9 @@ class Color:
     END = "\033[0m"
 
     @classmethod
-    def as_dict(cls) -> dict[str, str]:
+    def as_dict(
+        cls,
+    ) -> dict[str, str]:
         """Return the defined color names as a list"""
         return {
             key: value
@@ -52,17 +58,24 @@ class Color:
         }
 
     @classmethod
-    def color_names(cls) -> list[str]:
+    def color_names(
+        cls,
+    ) -> list[str]:
         """Return the defined color names as a list"""
         return [key for key, _ in cls.as_dict().items()]
 
     @classmethod
-    def color_codes(cls) -> list[str]:
+    def color_codes(
+        cls,
+    ) -> list[str]:
         """Return the defined color codes as a list"""
         return [value for _, value in cls.as_dict().items()]
 
     @classmethod
-    def get_color_code(cls, color_name) -> str:
+    def get_color_code(
+        cls,
+        color_name,
+    ) -> str:
         """Return the ANSI terminal color code associated with a defined name"""
         color_code = [
             value for key, value in cls.__dict__.items() if key == color_name.upper()
@@ -70,12 +83,18 @@ class Color:
         return color_code[0] if color_code else None
 
     @classmethod
-    def validate_color_code(cls, color_code) -> bool:
+    def validate_color_code(
+        cls,
+        color_code,
+    ) -> bool:
         """Validate that the color code provided is defined"""
         return color_code in cls.color_codes()
 
     @classmethod
-    def validate_color_name(cls, color_name) -> bool:
+    def validate_color_name(
+        cls,
+        color_name,
+    ) -> bool:
         """Validate that the color code provided is defined"""
         return color_name in cls.color_names()
 
@@ -83,7 +102,10 @@ class Color:
 color = Color()
 
 
-def colored(txt: str, color_name: str | None) -> str:
+def colored(
+    txt: str,
+    color_name: str | None,
+) -> str:
     """Add color formatting to the provided text"""
     if color_name is None:
         print("Color name was None")
@@ -101,7 +123,9 @@ def colored(txt: str, color_name: str | None) -> str:
 
 
 @cache
-def get_soup(html):
+def get_soup(
+    html,
+):
     """Get am instance of a Beautiful Soup parsed HTML page"""
     soup = BeautifulSoup(html, "html.parser")
     return soup

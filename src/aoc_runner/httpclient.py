@@ -23,7 +23,9 @@ class HttpClient:
     limiting.
     """
 
-    def __init__(self):
+    def __init__(
+        self,
+    ):
         """Initialize the HTTP Client class"""
         proxy_url = environ.get("http_proxy") or environ.get("https_proxy")
 
@@ -39,7 +41,9 @@ class HttpClient:
         self._cool_off = 0.25
         self._history = deque([time.time() - self._max_t] * 4, maxlen=4)
 
-    def _limiter(self):
+    def _limiter(
+        self,
+    ):
         """Ensure that the Advent of Code servers are not accessed too fast."""
         now = time.time()
         t0 = self._history[0]
@@ -52,7 +56,12 @@ class HttpClient:
 
         self._history.append(now)
 
-    def get(self, url, token=None, redirect=True):
+    def get(
+        self,
+        url,
+        token=None,
+        redirect=True,
+    ):
         """Issue an HTTP GET request to the Advent of Code servers"""
         print(f"Running http_client.get for token {token}")
         if token is None:
@@ -67,7 +76,12 @@ class HttpClient:
         self.req_count["GET"] += 1
         return resp
 
-    def post(self, url, token, fields):
+    def post(
+        self,
+        url,
+        token,
+        fields,
+    ):
         """Issue an HTTP POST request to the Advent of Code servers"""
         print(f"Running http_client.post for token {token}")
         headers = self._pool_manager.headers | {"Cookie": f"session={token}"}

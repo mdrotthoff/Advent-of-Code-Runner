@@ -93,6 +93,7 @@ markers = [
     "core",            # Core application tests
     "config",          # Config module application tests
     "user",            # User module application tests
+    "utils",           # Utility module application tests
     "web",             # Browwer based tests
     "dev",             # Tests under development
     "external",        # Test that access the Advent of Code servers

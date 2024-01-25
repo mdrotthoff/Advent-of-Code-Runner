@@ -43,7 +43,7 @@ class Color:
     END = "\033[0m"
 
     @classmethod
-    def color_dict(cls) -> dict[str, str]:
+    def as_dict(cls) -> dict[str, str]:
         """Return the defined color names as a list"""
         return {
             # key for key in cls.__dict__.keys()
@@ -55,12 +55,12 @@ class Color:
     @classmethod
     def color_names(cls) -> list[str]:
         """Return the defined color names as a list"""
-        return [key for key, _ in cls.color_dict().items()]
+        return [key for key, _ in cls.as_dict().items()]
 
     @classmethod
     def color_values(cls) -> list[str]:
         """Return the defined color values as a list"""
-        return [value for _, value in cls.color_dict().items()]
+        return [value for _, value in cls.as_dict().items()]
 
     @classmethod
     def get_color_code(cls, color_name) -> str:

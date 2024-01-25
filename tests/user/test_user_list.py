@@ -30,7 +30,9 @@ def test_show_environment():
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_init_new_no_file(user_http_get):
+def test_user_list_init_new_no_file(
+    user_http_get,
+):
     """Test the UserList class initialization where the file did not
     exist and there is no default token available either as a file
     or in the environment variables
@@ -49,9 +51,9 @@ def test_user_list_init_new_no_file(user_http_get):
 @pytest.mark.user
 @pytest.mark.unit
 def test_user_list_init_new_no_file_default_token_file(
-        user_http_get,
-        make_default_token_file,
-        valid_user,
+    user_http_get,
+    make_default_token_file,
+    valid_user,
 ):
     """Test the UserList class initialization where the file did not
     exist and there is a default token available as a file
@@ -69,7 +71,11 @@ def test_user_list_init_new_no_file_default_token_file(
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_init_existing(user_http_get, expired_user, create_loaded_tokens_json):
+def test_user_list_init_existing(
+    user_http_get,
+    expired_user,
+    create_loaded_tokens_json,
+):
     """Test the UserList class initialization where the file does
     exist and there is no token available in the environment variables
     but a default token file exists
@@ -87,8 +93,10 @@ def test_user_list_init_existing(user_http_get, expired_user, create_loaded_toke
 #
 @pytest.mark.user
 @pytest.mark.unit
-# def test_user_list_get_default_token_no_default(user_http_get, valid_user, expired_user):
-def test_user_list_get_default_token_no_default(user_http_get, expired_user):
+def test_user_list_get_default_token_no_default(
+    user_http_get,
+    expired_user,
+):
     """Test the UserList class _get_default_token where there is no
     default token available either as a file or in the environment
     variables
@@ -101,8 +109,11 @@ def test_user_list_get_default_token_no_default(user_http_get, expired_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-# def test_user_list_get_default_token(user_http_get, valid_user, make_default_token_file, runner_auth_dir):
-def test_user_list_get_default_token_file_token(user_http_get, valid_user, make_default_token_file):
+def test_user_list_get_default_token_file_token(
+    user_http_get,
+    valid_user,
+    make_default_token_file,
+):
     """Test the UserList class _get_default_token where there is a
     default token available as a file but not in the environment
     variables
@@ -120,7 +131,12 @@ def test_user_list_get_default_token_file_token(user_http_get, valid_user, make_
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_default_token_session_token(user_http_get, expired_user, valid_user, monkeypatch):
+def test_user_list_get_default_token_session_token(
+    user_http_get,
+    expired_user,
+    valid_user,
+    monkeypatch,
+):
     """Test the UserList class _get_default_token where there is a
     default token available in the environment variables but not as a file
     """
@@ -136,7 +152,13 @@ def test_user_list_get_default_token_session_token(user_http_get, expired_user, 
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_default_token_both(user_http_get, expired_user, valid_user, make_default_token_file, monkeypatch):
+def test_user_list_get_default_token_both(
+    user_http_get,
+    expired_user,
+    valid_user,
+    make_default_token_file,
+    monkeypatch,
+):
     """Test the UserList class _get_default_token where there is a
     default token available as both an environment variables and in
     a file.  Token from the environment variable should be used.
@@ -156,7 +178,11 @@ def test_user_list_get_default_token_both(user_http_get, expired_user, valid_use
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_default_token_user_exists(user_http_get, valid_user, monkeypatch):
+def test_user_list_get_default_token_user_exists(
+    user_http_get,
+    valid_user,
+    monkeypatch,
+):
     """Test the UserList class _get_default_token where there is a
     default token available in the environment variables.  The default
     user does exists in UserList
@@ -176,14 +202,18 @@ def test_user_list_get_default_token_user_exists(user_http_get, valid_user, monk
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_default_token_user_exists_different_token(user_http_get, valid_user, monkeypatch):
+def test_user_list_get_default_token_user_exists_different_token(
+    user_http_get,
+    valid_user,
+    monkeypatch,
+):
     """Test the UserList class _get_default_token where there is a
     default token available in the environment variables.  The default
     user does exists in UserList
     """
 
     old_user = valid_user.model_copy()
-    old_user.token = 'Test token'
+    old_user.token = "Test token"
     user_list = UserList()
     user_list.add_user(user_info=old_user)
     assert user_list._default_user is not None
@@ -201,7 +231,12 @@ def test_user_list_get_default_token_user_exists_different_token(user_http_get, 
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_default_token_no_exists(user_http_get, expired_user, valid_user, monkeypatch):
+def test_user_list_get_default_token_no_exists(
+    user_http_get,
+    expired_user,
+    valid_user,
+    monkeypatch,
+):
     """Test the UserList class _get_default_token where there is a
     default token available in the environment variables.  The default
     user does NOT exist in UserList
@@ -227,7 +262,10 @@ def test_user_list_get_default_token_no_exists(user_http_get, expired_user, vali
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_token_owner_no_user(user_http_get, valid_user):
+def test_user_list_get_token_owner_no_user(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList._get_token_owner returns none when the token is
     not defined in tokens.json
     """
@@ -239,7 +277,10 @@ def test_user_list_get_token_owner_no_user(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_token_owner_user_exists(user_http_get, valid_user):
+def test_user_list_get_token_owner_user_exists(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList._get_token_owner returns the correct user ID when
     the token is defined in tokens.json
     """
@@ -260,7 +301,9 @@ def test_user_list_get_token_owner_user_exists(user_http_get, valid_user):
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_load_no_file(user_http_get):
+def test_user_list_load_no_file(
+    user_http_get,
+):
     """Test the UserList.load method when no file is available"""
 
     user_list = UserList()
@@ -276,7 +319,10 @@ def test_user_list_load_no_file(user_http_get):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_load_no_file_with_users(user_http_get, create_loaded_tokens_json):
+def test_user_list_load_no_file_with_users(
+    user_http_get,
+    create_loaded_tokens_json,
+):
     """Test the UserList.load method when no file is available but data
     already exists in the class
     """
@@ -294,7 +340,10 @@ def test_user_list_load_no_file_with_users(user_http_get, create_loaded_tokens_j
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_load_file_no_users(user_http_get, create_empty_tokens_json):
+def test_user_list_load_file_no_users(
+    user_http_get,
+    create_empty_tokens_json,
+):
     """Test the UserList.load method when a file is available but no
     users are defined"""
 
@@ -306,7 +355,10 @@ def test_user_list_load_file_no_users(user_http_get, create_empty_tokens_json):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_load_file_with_users(user_http_get, create_loaded_tokens_json):
+def test_user_list_load_file_with_users(
+    user_http_get,
+    create_loaded_tokens_json,
+):
     """Test the UserList.load method when a file is available that has
     users are defined"""
 
@@ -321,7 +373,9 @@ def test_user_list_load_file_with_users(user_http_get, create_loaded_tokens_json
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_save_no_file(user_http_get):
+def test_user_list_save_no_file(
+    user_http_get,
+):
     """Test the UserList.save() method when no file exists"""
 
     user_list = UserList()
@@ -338,7 +392,9 @@ def test_user_list_save_no_file(user_http_get):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_save_file_exists(user_http_get):
+def test_user_list_save_file_exists(
+    user_http_get,
+):
     """Test the UserList.save() method when a file already exists"""
 
     user_list = UserList()
@@ -355,7 +411,9 @@ def test_user_list_save_file_exists(user_http_get):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_save_file_updated(user_http_get):
+def test_user_list_save_file_updated(
+    user_http_get,
+):
     """Test the UserList.save() method when a file already exists
     but has been updated since it was loaded"""
 
@@ -380,7 +438,10 @@ def test_user_list_save_file_updated(user_http_get):
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_add_token_no_user(user_http_get, valid_user):
+def test_user_list_add_token_no_user(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.add_token() method where the token does not exist"""
 
     user_list = UserList()
@@ -391,7 +452,10 @@ def test_user_list_add_token_no_user(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_add_token_user_exists(user_http_get, valid_user):
+def test_user_list_add_token_user_exists(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.add_token() method where the token does exist"""
 
     user_list = UserList()
@@ -407,7 +471,10 @@ def test_user_list_add_token_user_exists(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_add_token_user_exists_different_token(user_http_get, valid_user):
+def test_user_list_add_token_user_exists_different_token(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.add_token() method where the token does exist"""
 
     old_user = valid_user.model_copy()
@@ -429,7 +496,10 @@ def test_user_list_add_token_user_exists_different_token(user_http_get, valid_us
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_add_token_user_exists_different_token_forced(user_http_get, valid_user):
+def test_user_list_add_token_user_exists_different_token_forced(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.add_token() method where the token does exist"""
 
     old_user = valid_user.model_copy()
@@ -450,7 +520,10 @@ def test_user_list_add_token_user_exists_different_token_forced(user_http_get, v
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_add_user(user_http_get, valid_user):
+def test_user_list_add_user(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.add_user adds the defined user to an empty
     user list and sets it as the default token
     """
@@ -467,7 +540,10 @@ def test_user_list_add_user(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_add_user_exists_not_forced(user_http_get, valid_user):
+def test_user_list_add_user_exists_not_forced(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.add_user raises an exception when the user to be
     added already exists in the user list.  Exception UserAlreadyExists
     should be raised.
@@ -490,7 +566,10 @@ def test_user_list_add_user_exists_not_forced(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_add_user_exists_forced(user_http_get, valid_user):
+def test_user_list_add_user_exists_forced(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.add_user when the user already exists and the
     force option is set.  No exception should be raised.
     """
@@ -508,7 +587,10 @@ def test_user_list_add_user_exists_forced(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_add_user_invalid_login_source(user_http_get, valid_user):
+def test_user_list_add_user_invalid_login_source(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.add_user adds the defined user to an empty
     user list and sets it as the default token
     """
@@ -530,7 +612,10 @@ def test_user_list_add_user_invalid_login_source(user_http_get, valid_user):
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_users_no_users(user_http_get, valid_user):
+def test_user_list_get_users_no_users(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.get_users returns an empty dictionary if there
     not any users defined
     """
@@ -545,7 +630,10 @@ def test_user_list_get_users_no_users(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_get_users_defined_users(user_http_get, valid_user):
+def test_user_list_get_users_defined_users(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.get_users returns an dictionary with user(s)
     defined that is as long as the number of users defined.
     """
@@ -566,7 +654,10 @@ def test_user_list_get_users_defined_users(user_http_get, valid_user):
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_remove_user_no_user(user_http_get, valid_user):
+def test_user_list_remove_user_no_user(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.remove_user() method where the user does not exist.
     Tokens file should not be updated
     """
@@ -583,7 +674,10 @@ def test_user_list_remove_user_no_user(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_remove_user_single_user(user_http_get, valid_user):
+def test_user_list_remove_user_single_user(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.remove_user() method where the user exists
     as the only user. Tokens file should be updated
     """
@@ -604,7 +698,11 @@ def test_user_list_remove_user_single_user(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_remove_user_multi_user(user_http_get, valid_user, expired_user):
+def test_user_list_remove_user_multi_user(
+    user_http_get,
+    valid_user,
+    expired_user,
+):
     """Test the UserList.remove_user() method where multiple users exist.  User
     removed is the default user.  Tokens file should be updated
     """
@@ -632,7 +730,10 @@ def test_user_list_remove_user_multi_user(user_http_get, valid_user, expired_use
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_set_default_token_no_user(user_http_get, valid_user):
+def test_user_list_set_default_token_no_user(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.set_default_token() method where the user does not exist.
     Exception NoSuchUser should be raised
     """
@@ -651,7 +752,10 @@ def test_user_list_set_default_token_no_user(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_set_default_token_user_is_default(user_http_get, valid_user):
+def test_user_list_set_default_token_user_is_default(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.set_default_token() method where the user is
     already the default user.  Default user should not change and file
     should not be saved.
@@ -671,7 +775,11 @@ def test_user_list_set_default_token_user_is_default(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_set_default_token_user_is_not_default(user_http_get, expired_user, valid_user):
+def test_user_list_set_default_token_user_is_not_default(
+    user_http_get,
+    expired_user,
+    valid_user,
+):
     """Test the UserList.set_default_token() method where the user does not exist.
     Default user should not change and file should not be saved.
     """
@@ -695,7 +803,10 @@ def test_user_list_set_default_token_user_is_not_default(user_http_get, expired_
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_set_default_user_no_user(user_http_get, valid_user):
+def test_user_list_set_default_user_no_user(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.set_default_user() method where the user does not exist.
     Exception NoSuchUser should be raised
     """
@@ -715,7 +826,10 @@ def test_user_list_set_default_user_no_user(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_set_default_user_user_is_default(user_http_get, valid_user):
+def test_user_list_set_default_user_user_is_default(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.set_default_user() method where the user is
     already the default user.  Default user should not change and file
     should not be saved.
@@ -735,14 +849,17 @@ def test_user_list_set_default_user_user_is_default(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_set_default_user_user_is_not_default(user_http_get, expired_user, valid_user):
+def test_user_list_set_default_user_user_is_not_default(
+    user_http_get,
+    expired_user,
+    valid_user,
+):
     """Test the UserList.set_default_user() method where the user does not exist.
     Default user should not change and file should not be saved.
     """
 
     user_list = UserList()
     user_list.add_user(user_info=expired_user)
-    # default_user = user_list._default_user
     user_list.add_user(user_info=valid_user)
     tokens_file = user_list.tokens_file
     modified_time = tokens_file.stat().st_mtime
@@ -759,7 +876,10 @@ def test_user_list_set_default_user_user_is_not_default(user_http_get, expired_u
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_update_token_no_user(user_http_get, valid_user):
+def test_user_list_update_token_no_user(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.update_token() method where the user does not exist.
     Exception NoSuchUser should be raised
     """
@@ -779,7 +899,10 @@ def test_user_list_update_token_no_user(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_update_token_current_token(user_http_get, valid_user):
+def test_user_list_update_token_current_token(
+    user_http_get,
+    valid_user,
+):
     """Test the UserList.set_default_user() method where the user exists
     amd the token matches the new value.  The user token should not change
     and file should not be saved.
@@ -801,15 +924,17 @@ def test_user_list_update_token_current_token(user_http_get, valid_user):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_update_token_different_token(user_http_get, expired_user, valid_user):
+def test_user_list_update_token_different_token(
+    user_http_get,
+    expired_user,
+    valid_user,
+):
     """Test the UserList.update_token() method where the user exists with a
     different token.  The user token should be change and file should be
     saved.
     """
 
     user_list = UserList()
-    # user_list.add_user(user_info=expired_user)
-    # default_user = user_list._default_user
     user_list.add_user(user_info=valid_user)
     tokens_file = user_list.tokens_file
     modified_time = tokens_file.stat().st_mtime
@@ -830,7 +955,10 @@ def test_user_list_update_token_different_token(user_http_get, expired_user, val
 #
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_getter_default_token_file(user_http_get, runner_auth_dir):
+def test_user_list_getter_default_token_file(
+    user_http_get,
+    runner_auth_dir,
+):
     """Test the UserList.default_token_file() property returns the
     expected value.
     """
@@ -842,7 +970,10 @@ def test_user_list_getter_default_token_file(user_http_get, runner_auth_dir):
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_getter_get_default_user_no_user(user_http_get, runner_auth_dir):
+def test_user_list_getter_get_default_user_no_user(
+    user_http_get,
+    runner_auth_dir,
+):
     """Test the UserList.get_default_user() property returns None when
     there are no users.
     """
@@ -854,7 +985,11 @@ def test_user_list_getter_get_default_user_no_user(user_http_get, runner_auth_di
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_getter_get_default_user_valid_user(user_http_get, runner_auth_dir, valid_user):
+def test_user_list_getter_get_default_user_valid_user(
+    user_http_get,
+    runner_auth_dir,
+    valid_user,
+):
     """Test the UserList.get_default_user() property returns the current
     default user when there are users.
     """
@@ -868,7 +1003,10 @@ def test_user_list_getter_get_default_user_valid_user(user_http_get, runner_auth
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_list_getter_tokens_file(user_http_get, runner_auth_dir):
+def test_user_list_getter_tokens_file(
+    user_http_get,
+    runner_auth_dir,
+):
     """Test the UserList.tokens_file() property returns the
     expected value.
     """

@@ -20,7 +20,10 @@ from aoc_runner.utils import _ensure_path_exists
 )
 @pytest.mark.utils
 @pytest.mark.unit
-def test_ensure_file_exists_file_does_not_exist(tmp_path, create):
+def test_ensure_file_exists_file_does_not_exist(
+    tmp_path,
+    create,
+):
     """Test the utils.ensure_path_exists() function with a
     non-existent file.  The file state should match the
     create parameter.
@@ -33,7 +36,9 @@ def test_ensure_file_exists_file_does_not_exist(tmp_path, create):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_ensure_file_exists_file_does_exist(tmp_path):
+def test_ensure_file_exists_file_does_exist(
+    tmp_path,
+):
     """Test the utils.ensure_path_exists() function with an
     existing file.  The file should remain unchanged.
     '"""
@@ -50,7 +55,9 @@ def test_ensure_file_exists_file_does_exist(tmp_path):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_ensure_file_exists_file_is_file(tmp_path):
+def test_ensure_file_exists_file_is_file(
+    tmp_path,
+):
     """Test the utils.ensure_path_exists() function with an
     existing file which is a file rather than a directory.
     The exception DirectoryIsFile should be raised.

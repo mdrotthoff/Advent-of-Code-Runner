@@ -2,7 +2,6 @@
 
 # System libraries
 from datetime import datetime
-import json
 import pickle
 
 # Pytest libraries
@@ -131,32 +130,48 @@ VALID_USERS = [
 ]
 
 
-@pytest.fixture(params=INVALID_USER_INFO)
-def invalid_user_info(request):
+@pytest.fixture(
+    params=INVALID_USER_INFO,
+)
+def invalid_user_info(
+    request,
+):
     """Return a range of invalid UserInfo data"""
 
     user_info = request.param
     yield user_info
 
 
-@pytest.fixture(params=EXPIRED_USERS)
-def expired_token(request):
+@pytest.fixture(
+    params=EXPIRED_USERS,
+)
+def expired_token(
+    request,
+):
     """Return the Advent of Code user ID and token of expired users"""
 
     user_info = request.param
     yield user_info.get("token")
 
 
-@pytest.fixture(params=REAL_USERS)
-def real_token(request):
+@pytest.fixture(
+    params=REAL_USERS,
+)
+def real_token(
+    request,
+):
     """Return the Advent of Code user ID and token of valid users"""
 
     user_info = request.param
     yield user_info.get("aoc_id"), user_info.get("token")
 
 
-@pytest.fixture(params=VALID_USERS)
-def valid_token(request):
+@pytest.fixture(
+    params=VALID_USERS,
+)
+def valid_token(
+    request,
+):
     """Return the Advent of Code user ID and token of a valid user"""
 
     user_info = request.param
@@ -233,8 +248,12 @@ def valid_user():
     )
 
 
-@pytest.fixture(params=LOGIN_SOURCES)
-def user_data(request):
+@pytest.fixture(
+    params=LOGIN_SOURCES,
+)
+def user_data(
+    request,
+):
     """Create a UserInfo object with valid values for each login source"""
     yield UserInfo(
         user_name="test user",
@@ -246,7 +265,9 @@ def user_data(request):
 
 
 @pytest.fixture
-def make_load_user_settings(request):
+def make_load_user_settings(
+    request,
+):
     """Create a factory which allows for dynamic loading of token data from file"""
 
     def make(url: str, token: str, redirect: bool):
@@ -254,7 +275,7 @@ def make_load_user_settings(request):
 
         file_path = request.config.rootdir / "tests" / "data" / "user"
         file_name = file_path / f"settings_{token}.pickle"
-        print(f"Getting mocked user settings for token {token}")
+        # print(f"Getting mocked user settings for token {token}")
 
         if file_name.exists():
             with open(file_name, mode="rb") as file:
@@ -275,7 +296,11 @@ def make_load_user_settings(request):
 
 
 @pytest.fixture
-def user_http_get(user_module_dir_patch, make_load_user_settings, monkeypatch):
+def user_http_get(
+    user_module_dir_patch,
+    make_load_user_settings,
+    monkeypatch,
+):
     """Monkey patch the http_client.get() to be a local operation"""
 
     monkeypatch.setattr("aoc_runner.user.http_client.get", make_load_user_settings)
@@ -291,7 +316,11 @@ def create_empty_tokens_json():
 
 
 @pytest.fixture
-def create_loaded_tokens_json(user_http_get, expired_user, valid_user):
+def create_loaded_tokens_json(
+    user_http_get,
+    expired_user,
+    valid_user,
+):
     """Create a loaded tokens.json file"""
 
     user_list = UserList()
@@ -303,24 +332,16 @@ def create_loaded_tokens_json(user_http_get, expired_user, valid_user):
     assert tokens_file.exists()
 
 
-# @pytest.fixture
-# def create_default_token_file(user_http_get, valid_token, runner_auth_dir):
-#     """Create a default token file"""
-#
-#     _, token = valid_token
-#     token_file = runner_auth_dir / "token"
-#     token_file.write_text(token, encoding="utf-8")
-#     yield token_file
-
-
 @pytest.fixture
-# def make_default_token_file(user_http_get, valid_token, runner_auth_dir):
-def make_default_token_file(runner_auth_dir):
+def make_default_token_file(
+    runner_auth_dir,
+):
     """Create a default token file"""
 
-    # def make(token, auth_dir=runner_auth_dir):
-    def make(token):
-        # _, token = valid_token
+    def make(
+        token,
+    ):
+        """Return mocked token file"""
         token_file = runner_auth_dir / "token"
         token_file.write_text(token, encoding="utf-8")
         return token_file

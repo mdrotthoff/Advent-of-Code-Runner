@@ -16,7 +16,10 @@ TOKENS_TO_CACHE = {
 }
 
 
-def cache_settings(token: str, source: str) -> None:
+def cache_settings(
+    token: str,
+    source: str,
+) -> None:
     """Cache the user settings page for the specified token"""
 
     file_name = Path("data") / f"settings_{token}.pickle"
@@ -33,9 +36,9 @@ def cache_settings(token: str, source: str) -> None:
         loaded = pickle.load(file)
 
     if (
-            loaded.data == response.data
-            and loaded.headers == response.headers
-            and loaded.status == response.status
+        loaded.data == response.data
+        and loaded.headers == response.headers
+        and loaded.status == response.status
     ):
         print(f"User settings for {source} cached")
 

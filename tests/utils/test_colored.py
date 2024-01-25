@@ -19,7 +19,9 @@ def test_colored_no_input():
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_colored_valid_input(get_color_name_code_list):
+def test_colored_valid_input(
+    get_color_name_code_list,
+):
     """Test the colored function with valid input"""
 
     color_name, color_value = get_color_name_code_list
@@ -30,7 +32,9 @@ def test_colored_valid_input(get_color_name_code_list):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_colored_invalid_input(get_invalid_colors):
+def test_colored_invalid_input(
+    get_invalid_colors,
+):
     """Test the colored function with invalid input"""
 
     color_name = get_invalid_colors

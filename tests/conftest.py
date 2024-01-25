@@ -5,7 +5,9 @@ import pytest
 
 
 @pytest.fixture
-def runner_dir(tmp_path):
+def runner_dir(
+    tmp_path,
+):
     """Build a temporary directory tree for use as the Advent of Code
     Runner storage tree
     """
@@ -15,7 +17,9 @@ def runner_dir(tmp_path):
 
 
 @pytest.fixture
-def runner_auth_dir(runner_dir):
+def runner_auth_dir(
+    runner_dir,
+):
     """Build a temporary directory tree for use as the Advent of Code
     Runner storage tree
     """
@@ -25,7 +29,9 @@ def runner_auth_dir(runner_dir):
 
 
 @pytest.fixture
-def runner_cache_dir(runner_dir):
+def runner_cache_dir(
+    runner_dir,
+):
     """Build a temporary directory tree for use as the Advent of Code
     Runner storage tree
     """
@@ -35,7 +41,9 @@ def runner_cache_dir(runner_dir):
 
 
 @pytest.fixture
-def runner_users_dir(runner_dir):
+def runner_users_dir(
+    runner_dir,
+):
     """Build a temporary directory tree for use as the Advent of Code
     Runner storage tree
     """
@@ -45,7 +53,11 @@ def runner_users_dir(runner_dir):
 
 
 @pytest.fixture
-def user_module_dir_patch(runner_auth_dir, runner_users_dir, monkeypatch):
+def user_module_dir_patch(
+    runner_auth_dir,
+    runner_users_dir,
+    monkeypatch,
+):
     """Monkey patch the users directories"""
 
     monkeypatch.setattr("aoc_runner.user.AOC_RUNNER_AUTH_DIR", runner_auth_dir)

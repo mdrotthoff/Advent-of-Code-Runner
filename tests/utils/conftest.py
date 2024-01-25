@@ -67,7 +67,9 @@ def color_code_list():
     return get_color_code_list()
 
 
-def pytest_generate_tests(metafunc):
+def pytest_generate_tests(
+    metafunc,
+):
     """Generate parametrized test cases for selected
     list of values
     """

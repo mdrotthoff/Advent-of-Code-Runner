@@ -2,7 +2,6 @@
 
 # System libraries
 from datetime import datetime
-from unittest.mock import patch
 
 # Pytest libraries
 import pytest
@@ -16,7 +15,10 @@ from aoc_runner.user import LOGIN_SOURCES, UserInfo
 
 @pytest.mark.user
 @pytest.mark.unit
-def test_user_info_invalid_data(invalid_user_info, user_http_get):
+def test_user_info_invalid_data(
+    invalid_user_info,
+    user_http_get,
+):
     """Test the allowed data types / values for each field of the UserInfo class"""
 
     with pytest.raises(ValidationError) as excp:
@@ -46,12 +48,12 @@ def test_user_info_invalid_data(invalid_user_info, user_http_get):
 @pytest.mark.user
 @pytest.mark.integration
 def test_user_info_login_source(
-        user_name,
-        aoc_id,
-        login_source,
-        last_updated,
-        token,
-        user_http_get,
+    user_name,
+    aoc_id,
+    login_source,
+    last_updated,
+    token,
+    user_http_get,
 ):
     """Test that each defined login_source is usable by the UserInfo class"""
 

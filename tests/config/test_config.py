@@ -5,9 +5,6 @@ from importlib import reload
 from pathlib import Path
 import sys
 
-# Pretty Print libraries
-from pprint import pprint
-
 # Import Pytest libraries
 import pytest
 
@@ -20,74 +17,70 @@ from aoc_runner.utils import get_soup
 @pytest.mark.parametrize(
     "environ_vars",
     [
-        (
-                {"AOC_RUNNER_PROJECT_HOME": False,
-                 "AOC_RUNNER_DIR": False,
-                 "AOC_RUNNER_AUTH_DIR": False,
-                 "AOC_RUNNER_CACHE_DIR": False,
-                 "AOC_RUNNER_USERS_DIR": False,
-                 }
-        ),
-        (
-                {"AOC_RUNNER_PROJECT_HOME": True,
-                 "AOC_RUNNER_DIR": False,
-                 "AOC_RUNNER_AUTH_DIR": False,
-                 "AOC_RUNNER_CACHE_DIR": False,
-                 "AOC_RUNNER_USERS_DIR": False,
-                 }
-        ),
-        (
-                {"AOC_RUNNER_PROJECT_HOME": True,
-                 "AOC_RUNNER_DIR": True,
-                 "AOC_RUNNER_AUTH_DIR": False,
-                 "AOC_RUNNER_CACHE_DIR": False,
-                 "AOC_RUNNER_USERS_DIR": False,
-                 }
-        ),
-        (
-                {"AOC_RUNNER_PROJECT_HOME": False,
-                 "AOC_RUNNER_DIR": True,
-                 "AOC_RUNNER_AUTH_DIR": False,
-                 "AOC_RUNNER_CACHE_DIR": False,
-                 "AOC_RUNNER_USERS_DIR": False,
-                 }
-        ),
-        (
-                {"AOC_RUNNER_PROJECT_HOME": False,
-                 "AOC_RUNNER_DIR": False,
-                 "AOC_RUNNER_AUTH_DIR": True,
-                 "AOC_RUNNER_CACHE_DIR": True,
-                 "AOC_RUNNER_USERS_DIR": True,
-                 }
-        ),
-        (
-                {"AOC_RUNNER_PROJECT_HOME": True,
-                 "AOC_RUNNER_DIR": False,
-                 "AOC_RUNNER_AUTH_DIR": True,
-                 "AOC_RUNNER_CACHE_DIR": True,
-                 "AOC_RUNNER_USERS_DIR": True,
-                 }
-        ),
-        (
-                {"AOC_RUNNER_PROJECT_HOME": False,
-                 "AOC_RUNNER_DIR": True,
-                 "AOC_RUNNER_AUTH_DIR": True,
-                 "AOC_RUNNER_CACHE_DIR": True,
-                 "AOC_RUNNER_USERS_DIR": True,
-                 }
-        ),
-        (
-                {"AOC_RUNNER_PROJECT_HOME": True,
-                 "AOC_RUNNER_DIR": True,
-                 "AOC_RUNNER_AUTH_DIR": True,
-                 "AOC_RUNNER_CACHE_DIR": True,
-                 "AOC_RUNNER_USERS_DIR": True,
-                 }
-        ),
-    ]
+        {
+            "AOC_RUNNER_PROJECT_HOME": False,
+            "AOC_RUNNER_DIR": False,
+            "AOC_RUNNER_AUTH_DIR": False,
+            "AOC_RUNNER_CACHE_DIR": False,
+            "AOC_RUNNER_USERS_DIR": False,
+        },
+        {
+            "AOC_RUNNER_PROJECT_HOME": True,
+            "AOC_RUNNER_DIR": False,
+            "AOC_RUNNER_AUTH_DIR": False,
+            "AOC_RUNNER_CACHE_DIR": False,
+            "AOC_RUNNER_USERS_DIR": False,
+        },
+        {
+            "AOC_RUNNER_PROJECT_HOME": True,
+            "AOC_RUNNER_DIR": True,
+            "AOC_RUNNER_AUTH_DIR": False,
+            "AOC_RUNNER_CACHE_DIR": False,
+            "AOC_RUNNER_USERS_DIR": False,
+        },
+        {
+            "AOC_RUNNER_PROJECT_HOME": False,
+            "AOC_RUNNER_DIR": True,
+            "AOC_RUNNER_AUTH_DIR": False,
+            "AOC_RUNNER_CACHE_DIR": False,
+            "AOC_RUNNER_USERS_DIR": False,
+        },
+        {
+            "AOC_RUNNER_PROJECT_HOME": False,
+            "AOC_RUNNER_DIR": False,
+            "AOC_RUNNER_AUTH_DIR": True,
+            "AOC_RUNNER_CACHE_DIR": True,
+            "AOC_RUNNER_USERS_DIR": True,
+        },
+        {
+            "AOC_RUNNER_PROJECT_HOME": True,
+            "AOC_RUNNER_DIR": False,
+            "AOC_RUNNER_AUTH_DIR": True,
+            "AOC_RUNNER_CACHE_DIR": True,
+            "AOC_RUNNER_USERS_DIR": True,
+        },
+        {
+            "AOC_RUNNER_PROJECT_HOME": False,
+            "AOC_RUNNER_DIR": True,
+            "AOC_RUNNER_AUTH_DIR": True,
+            "AOC_RUNNER_CACHE_DIR": True,
+            "AOC_RUNNER_USERS_DIR": True,
+        },
+        {
+            "AOC_RUNNER_PROJECT_HOME": True,
+            "AOC_RUNNER_DIR": True,
+            "AOC_RUNNER_AUTH_DIR": True,
+            "AOC_RUNNER_CACHE_DIR": True,
+            "AOC_RUNNER_USERS_DIR": True,
+        },
+    ],
 )
 @pytest.mark.config
-def test_runner_home_only(ensure_path_exists, monkeypatch, environ_vars):
+def test_runner_home_only(
+    ensure_path_exists,
+    monkeypatch,
+    environ_vars,
+):
     """Test having the AOC_RUNNER_PROJECT_HOME set only"""
 
     with monkeypatch.context() as patch:
@@ -154,5 +147,4 @@ def test_aoc_domain():
     soup = get_soup(response.data)
 
     assert response.status == 200
-    assert soup.title.text.startswith('Advent of Code')
-
+    assert soup.title.text.startswith("Advent of Code")

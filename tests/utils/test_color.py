@@ -1,8 +1,5 @@
 """Test the Advent of Code Runner Util Color class"""
 
-# System libraries
-# from time import sleep
-
 # Pytest libraries
 import pytest
 
@@ -12,7 +9,9 @@ from aoc_runner.utils import Color
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_as_dict(color_name_code_dict):
+def test_color_as_dict(
+    color_name_code_dict,
+):
     """Test the color_dict class method"""
 
     color = Color()
@@ -29,7 +28,9 @@ def test_color_as_dict(color_name_code_dict):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_color_names(color_name_list):
+def test_color_color_names(
+    color_name_list,
+):
     """Test the color_names class method"""
 
     color = Color()
@@ -44,7 +45,9 @@ def test_color_color_names(color_name_list):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_color_values(color_code_list):
+def test_color_color_values(
+    color_code_list,
+):
     """Test the color_values class method"""
 
     color_code = Color()
@@ -58,7 +61,9 @@ def test_color_color_values(color_code_list):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_get_color_code_valid(get_color_name_code_list):
+def test_color_get_color_code_valid(
+    get_color_name_code_list,
+):
     """Test the get_color_code class method with valid color names"""
 
     color_name, color_code = get_color_name_code_list
@@ -70,7 +75,9 @@ def test_color_get_color_code_valid(get_color_name_code_list):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_get_color_code_invalid(get_invalid_colors):
+def test_color_get_color_code_invalid(
+    get_invalid_colors,
+):
     """Test the get_color_code class method with invalid color names"""
 
     color_name = get_invalid_colors
@@ -81,7 +88,9 @@ def test_color_get_color_code_invalid(get_invalid_colors):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_validate_color_code_valid(get_color_code_list):
+def test_color_validate_color_code_valid(
+    get_color_code_list,
+):
     """Test the validate_color_code class method with valid color codes"""
 
     color_value = get_color_code_list
@@ -93,7 +102,9 @@ def test_color_validate_color_code_valid(get_color_code_list):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_validate_color_code_invalid(get_invalid_colors):
+def test_color_validate_color_code_invalid(
+    get_invalid_colors,
+):
     """Test the validate_color class method with invalid color codes"""
 
     color_value = get_invalid_colors
@@ -106,7 +117,9 @@ def test_color_validate_color_code_invalid(get_invalid_colors):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_validate_color_name_valid(get_color_name_list):
+def test_color_validate_color_name_valid(
+    get_color_name_list,
+):
     """Test the validate_color_name class method with valid color names"""
 
     color_name = get_color_name_list
@@ -118,7 +131,9 @@ def test_color_validate_color_name_valid(get_color_name_list):
 
 @pytest.mark.utils
 @pytest.mark.unit
-def test_color_validate_color_name_valid(get_invalid_colors):
+def test_color_validate_color_name_valid(
+    get_invalid_colors,
+):
     """Test the validate_color_name class method with invalid color names"""
 
     color_name = get_invalid_colors

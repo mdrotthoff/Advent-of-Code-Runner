@@ -46,7 +46,6 @@ class Color:
     def as_dict(cls) -> dict[str, str]:
         """Return the defined color names as a list"""
         return {
-            # key for key in cls.__dict__.keys()
             key: value
             for key, value in cls.__dict__.items()
             if not key.startswith("__") and key[:2] == key[:2].upper()
@@ -58,8 +57,8 @@ class Color:
         return [key for key, _ in cls.as_dict().items()]
 
     @classmethod
-    def color_values(cls) -> list[str]:
-        """Return the defined color values as a list"""
+    def color_codes(cls) -> list[str]:
+        """Return the defined color codes as a list"""
         return [value for _, value in cls.as_dict().items()]
 
     @classmethod
@@ -73,7 +72,7 @@ class Color:
     @classmethod
     def validate_color_code(cls, color_code) -> bool:
         """Validate that the color code provided is defined"""
-        return color_code in cls.color_values()
+        return color_code in cls.color_codes()
 
     @classmethod
     def validate_color_name(cls, color_name) -> bool:

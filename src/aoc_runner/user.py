@@ -56,15 +56,23 @@ class UserInfo(BaseModel):
     @field_serializer("last_updated")
     def serialize_last_updated(self, last_updated: datetime) -> str:
         """Serialize the last updated as a string"""
+
         return last_updated.isoformat()
 
     @field_validator("login_source")
     @classmethod
     def login_source_must_be_defined(cls, login_source: str):
         """Ensure the specified login source is defined"""
+
         if login_source not in LOGIN_SOURCES:
             raise ValueError("source is not defined")
         return login_source
+
+    @property
+    def user_id(self) -> str:
+        """Return the system user ID"""
+
+        return f"{self.login_source}.{self.aoc_id}"
 
 
 class User:
